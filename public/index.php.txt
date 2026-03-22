@@ -1,0 +1,26 @@
+<?php
+
+require_once '../app/config/config.php';
+require_once '../app/core/Database.php';
+require_once '../app/core/Controller.php';
+require_once '../app/core/Model.php';
+
+$page = $_GET['page'] ?? 'home';
+
+switch ($page) {
+    case 'home':
+        require_once '../app/views/home.php';
+        break;
+
+    case 'login':
+        require_once '../app/views/auth/login.php';
+        break;
+
+    case 'register':
+        require_once '../app/views/auth/register.php';
+        break;
+
+    default:
+        echo "404 - Page not found";
+        break;
+}
