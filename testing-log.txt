@@ -1,3 +1,10 @@
 Authentication tested successfully:
 - Registration page works
 - Login page works
+
+
+Tasks page completed successfully:
+- Tasks page loads
+- Add task works
+- Complete task works
+- Delete task works
