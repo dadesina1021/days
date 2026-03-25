@@ -1,0 +1,3 @@
+Authentication tested successfully:
+- Registration page works
+- Login page works
