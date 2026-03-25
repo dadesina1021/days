@@ -19,7 +19,7 @@ class AuthController {
 
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /days/public/register');
+            header('Location: /~2020584/public/index.php?url=register');
             exit;
         }
 
@@ -61,7 +61,7 @@ class AuthController {
                 'email' => $email
             ];
 
-            header('Location: /days/public/register');
+            header('Location: /~2020584/public/index.php?url=register');
             exit;
         }
 
@@ -71,11 +71,11 @@ class AuthController {
 
         if ($success) {
             $_SESSION['success'] = 'Account created successfully. Please log in.';
-            header('Location: /days/public/login');
+            header('Location: /~2020584/public/index.php?url=login');
             exit;
         } else {
             $_SESSION['errors'] = ['Something went wrong. Please try again.'];
-            header('Location: /days/public/register');
+            header('Location: /~2020584/public/index.php?url=register');
             exit;
         }
     }
@@ -86,7 +86,7 @@ class AuthController {
 
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /days/public/login');
+            header('Location: /~2020584/public/index.php?url=login');
             exit;
         }
 
@@ -105,7 +105,7 @@ class AuthController {
 
         if (!empty($errors)) {
             $_SESSION['errors'] = $errors;
-            header('Location: /days/public/login');
+            header('Location: /~2020584/public/index.php?url=login');
             exit;
         }
 
@@ -115,11 +115,11 @@ class AuthController {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
 
-            header('Location: /days/public/tasks');
+            header('Location: /~2020584/public/index.php?url=tasks');
             exit;
         } else {
             $_SESSION['errors'] = ['Invalid email or password.'];
-            header('Location: /days/public/login');
+            header('Location: /~2020584/public/index.php?url=login');
             exit;
         }
     }
@@ -128,7 +128,7 @@ class AuthController {
         session_unset();
         session_destroy();
 
-        header('Location: /days/public/login');
+        header('Location: /~2020584/public/index.php?url=login');
         exit;
     }
 }

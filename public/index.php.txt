@@ -1,26 +1,34 @@
 <?php
 
-require_once '../app/config/config.php';
-require_once '../app/core/Database.php';
-require_once '../app/core/Controller.php';
-require_once '../app/core/Model.php';
+require_once __DIR__ . '/../app/controllers/AuthController.php';
 
-$page = $_GET['page'] ?? 'home';
+$url = $_GET['url'] ?? 'login';
+$url = trim($url, '/');
 
-switch ($page) {
-    case 'home':
-        require_once '../app/views/home.php';
+$authController = new AuthController();
+
+switch ($url) {
+    case 'register':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $authController->register();
+        } else {
+            $authController->showRegister();
+        }
         break;
 
     case 'login':
-        require_once '../app/views/auth/login.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $authController->login();
+        } else {
+            $authController->showLogin();
+        }
         break;
 
-    case 'register':
-        require_once '../app/views/auth/register.php';
+    case 'logout':
+        $authController->logout();
         break;
 
     default:
-        echo "404 - Page not found";
+        echo "Page not found";
         break;
 }
