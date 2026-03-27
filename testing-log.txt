@@ -8,3 +8,9 @@ Tasks page completed successfully:
 - Add task works
 - Complete task works
 - Delete task works
+
+Styling completed:
+- Login page styled
+- Register page styled
+- Tasks page styled
+- Responsive layout improved
