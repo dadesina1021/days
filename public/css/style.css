@@ -160,3 +160,23 @@ li {
         margin-right: 0;
     }
 }
+
+.quote-box {
+    background: #eef5ff;
+    border: 1px solid #c9d9ee;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.quote-text {
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.quote-author {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 15px;
+}

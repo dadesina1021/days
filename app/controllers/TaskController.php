@@ -130,4 +130,36 @@ class TaskController {
         ]);
         exit;
     }
+
+    public function ajaxQuote() {
+        header('Content-Type: application/json');
+
+        $url = 'https://zenquotes.io/api/random';
+        $response = @file_get_contents($url);
+
+        if ($response === false) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Could not load quote right now.'
+            ]);
+            exit;
+        }
+
+        $data = json_decode($response, true);
+
+        if (!$data || !isset($data[0]['q'], $data[0]['a'])) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Could not load quote right now.'
+            ]);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'quote' => $data[0]['q'],
+            'author' => $data[0]['a']
+        ]);
+        exit;
+    }
 }

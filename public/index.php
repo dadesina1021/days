@@ -68,6 +68,11 @@ switch ($url) {
         $taskController->ajaxDelete();
         break;
 
+    case 'ajax-quote':
+        $taskController = new TaskController();
+        $taskController->ajaxQuote();
+        break;
+
     default:
         echo "Page not found";
         break;

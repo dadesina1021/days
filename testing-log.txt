@@ -20,3 +20,9 @@ AJAX functionality implemented:
 - Tasks deleted without page refresh
 - Tasks completed without page refresh
 - Fetch API used for real-time updates
+
+Third-party API implemented:
+- Integrated ZenQuotes API for daily motivation
+- Used PHP to fetch API data (server-side)
+- Displayed quotes dynamically on tasks page
+- Added button to refresh quotes
