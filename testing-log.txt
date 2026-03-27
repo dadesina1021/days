@@ -32,3 +32,8 @@ Task priority feature implemented:
 - Integrated priority selection in task creation
 - Displayed priority using colour-coded indicators
 - Improved task organisation and usability
+
+Mobile usability improvement:
+- Implemented localStorage to save draft task input
+- Users can leave and return without losing typed task
+- Enhances mobile experience and usability
