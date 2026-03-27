@@ -14,3 +14,9 @@ Styling completed:
 - Register page styled
 - Tasks page styled
 - Responsive layout improved
+
+AJAX functionality implemented:
+- Tasks added without page refresh
+- Tasks deleted without page refresh
+- Tasks completed without page refresh
+- Fetch API used for real-time updates

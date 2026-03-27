@@ -61,4 +61,73 @@ class TaskController {
         header('Location: /~2020584/public/index.php?url=tasks');
         exit;
     }
+
+    public function ajaxStore() {
+        header('Content-Type: application/json');
+
+        $title = trim($_POST['title'] ?? '');
+
+        if ($title === '') {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Task title is required.'
+            ]);
+            exit;
+        }
+
+        $success = $this->taskModel->create($_SESSION['user_id'], $title);
+        $tasks = $this->taskModel->getAllByUser($_SESSION['user_id']);
+
+        echo json_encode([
+            'success' => $success,
+            'tasks' => $tasks
+        ]);
+        exit;
+    }
+
+    public function ajaxDelete() {
+        header('Content-Type: application/json');
+
+        $taskId = $_POST['task_id'] ?? null;
+
+        if (!$taskId) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Task ID is missing.'
+            ]);
+            exit;
+        }
+
+        $success = $this->taskModel->delete($taskId, $_SESSION['user_id']);
+        $tasks = $this->taskModel->getAllByUser($_SESSION['user_id']);
+
+        echo json_encode([
+            'success' => $success,
+            'tasks' => $tasks
+        ]);
+        exit;
+    }
+
+    public function ajaxToggleComplete() {
+        header('Content-Type: application/json');
+
+        $taskId = $_POST['task_id'] ?? null;
+
+        if (!$taskId) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Task ID is missing.'
+            ]);
+            exit;
+        }
+
+        $success = $this->taskModel->toggleComplete($taskId, $_SESSION['user_id']);
+        $tasks = $this->taskModel->getAllByUser($_SESSION['user_id']);
+
+        echo json_encode([
+            'success' => $success,
+            'tasks' => $tasks
+        ]);
+        exit;
+    }
 }

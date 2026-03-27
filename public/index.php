@@ -53,6 +53,21 @@ switch ($url) {
         $taskController->delete();
         break;
 
+    case 'ajax-store-task':
+        $taskController = new TaskController();
+        $taskController->ajaxStore();
+        break;
+
+    case 'ajax-toggle-task':
+        $taskController = new TaskController();
+        $taskController->ajaxToggleComplete();
+        break;
+
+    case 'ajax-delete-task':
+        $taskController = new TaskController();
+        $taskController->ajaxDelete();
+        break;
+
     default:
         echo "Page not found";
         break;
