@@ -180,3 +180,81 @@ li {
     color: #555;
     margin-bottom: 15px;
 }
+
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccd5e0;
+    border-radius: 8px;
+    font-size: 16px;
+    background: white;
+}
+
+.priority-badge {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.priority-low {
+    background: #d9f7df;
+    color: #1f7a35;
+}
+
+.priority-medium {
+    background: #fff1d6;
+    color: #a05a00;
+}
+
+.priority-high {
+    background: #ffe0e0;
+    color: #b30000;
+}
+
+.task-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.task-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.priority-dot {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.priority-low {
+    background: #2ecc71;
+}
+
+.priority-medium {
+    background: #f39c12;
+}
+
+.priority-high {
+    background: #e74c3c;
+}
+
+.priority-icon {
+    font-size: 18px;
+    line-height: 1;
+}

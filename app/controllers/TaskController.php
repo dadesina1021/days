@@ -26,9 +26,10 @@ class TaskController {
     public function store() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $title = trim($_POST['title'] ?? '');
+            $priority = $_POST['priority'] ?? 'Medium';
 
             if ($title !== '') {
-                $this->taskModel->create($_SESSION['user_id'], $title);
+                $this->taskModel->create($_SESSION['user_id'], $title, $priority);
             }
         }
 
@@ -66,6 +67,7 @@ class TaskController {
         header('Content-Type: application/json');
 
         $title = trim($_POST['title'] ?? '');
+        $priority = $_POST['priority'] ?? 'Medium';
 
         if ($title === '') {
             echo json_encode([
@@ -75,7 +77,7 @@ class TaskController {
             exit;
         }
 
-        $success = $this->taskModel->create($_SESSION['user_id'], $title);
+        $success = $this->taskModel->create($_SESSION['user_id'], $title, $priority);
         $tasks = $this->taskModel->getAllByUser($_SESSION['user_id']);
 
         echo json_encode([

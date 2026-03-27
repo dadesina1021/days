@@ -19,14 +19,15 @@ class Task {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function create($userId, $title) {
-        $query = "INSERT INTO {$this->table} (user_id, title)
-                  VALUES (:user_id, :title)";
+    public function create($userId, $title, $priority = 'Medium') {
+        $query = "INSERT INTO {$this->table} (user_id, title, priority)
+                  VALUES (:user_id, :title, :priority)";
         $stmt = $this->conn->prepare($query);
 
         return $stmt->execute([
             ':user_id' => $userId,
-            ':title' => $title
+            ':title' => $title,
+            ':priority' => $priority
         ]);
     }
 

@@ -34,6 +34,14 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <form id="taskForm">
             <input type="text" id="taskTitle" name="title" placeholder="Enter a task..." required>
+
+            <label for="taskPriority">Priority</label>
+            <select id="taskPriority" name="priority">
+                <option value="Low">🟢 Low Priority</option>
+                <option value="Medium" selected>🟠 Medium Priority</option>
+                <option value="High">🔴 High Priority</option>
+            </select>
+
             <button type="submit">Add Task</button>
         </form>
 
@@ -46,9 +54,24 @@ if (session_status() === PHP_SESSION_NONE) {
                 <?php foreach ($tasks as $task): ?>
                     <li>
                         <div class="task-row">
-                            <span class="task-title <?php echo $task['is_completed'] ? 'completed' : ''; ?>">
-                                <?php echo htmlspecialchars($task['title']); ?>
-                            </span>
+                            <div class="task-info">
+                                <span class="priority-icon">
+                                    <?php
+                                        $priority = $task['priority'] ?? 'Medium';
+                                        if ($priority === 'High') {
+                                            echo '🔴';
+                                        } elseif ($priority === 'Low') {
+                                            echo '🟢';
+                                        } else {
+                                            echo '🟠';
+                                        }
+                                    ?>
+                                </span>
+
+                                <span class="task-title <?php echo $task['is_completed'] ? 'completed' : ''; ?>">
+                                    <?php echo htmlspecialchars($task['title']); ?>
+                                </span>
+                            </div>
 
                             <div class="actions">
                                 <button onclick="toggleTask(<?php echo $task['id']; ?>)">
@@ -69,10 +92,17 @@ if (session_status() === PHP_SESSION_NONE) {
     <script>
         const taskForm = document.getElementById('taskForm');
         const taskTitle = document.getElementById('taskTitle');
+        const taskPriority = document.getElementById('taskPriority');
         const taskList = document.getElementById('taskList');
         const taskMessage = document.getElementById('taskMessage');
         const quoteText = document.getElementById('quoteText');
         const quoteAuthor = document.getElementById('quoteAuthor');
+
+        function getPriorityIcon(priority) {
+            if (priority === 'High') return '🔴';
+            if (priority === 'Low') return '🟢';
+            return '🟠';
+        }
 
         function renderTasks(tasks) {
             taskList.innerHTML = '';
@@ -87,9 +117,13 @@ if (session_status() === PHP_SESSION_NONE) {
 
                 li.innerHTML = `
                     <div class="task-row">
-                        <span class="task-title ${task.is_completed == 1 ? 'completed' : ''}">
-                            ${escapeHtml(task.title)}
-                        </span>
+                        <div class="task-info">
+                            <span class="priority-icon">${getPriorityIcon(task.priority || 'Medium')}</span>
+
+                            <span class="task-title ${task.is_completed == 1 ? 'completed' : ''}">
+                                ${escapeHtml(task.title)}
+                            </span>
+                        </div>
 
                         <div class="actions">
                             <button onclick="toggleTask(${task.id})">
@@ -116,6 +150,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
             const formData = new FormData();
             formData.append('title', taskTitle.value);
+            formData.append('priority', taskPriority.value);
 
             fetch('/~2020584/public/index.php?url=ajax-store-task', {
                 method: 'POST',
@@ -126,6 +161,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 if (data.success) {
                     renderTasks(data.tasks);
                     taskTitle.value = '';
+                    taskPriority.value = 'Medium';
+                    localStorage.removeItem('draftTask');
                     taskMessage.innerHTML = '<div class="message-success"><p>Task added successfully.</p></div>';
                 } else {
                     taskMessage.innerHTML = '<div class="message-error"><p>' + data.message + '</p></div>';
@@ -169,23 +206,35 @@ if (session_status() === PHP_SESSION_NONE) {
         }
 
         function loadQuote() {
-    fetch('/~2020584/public/index.php?url=ajax-quote')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                quoteText.textContent = `"${data.quote}"`;
-                quoteAuthor.textContent = `— ${data.author}`;
-            } else {
-                quoteText.textContent = 'Could not load quote right now.';
-                quoteAuthor.textContent = '';
+            fetch('/~2020584/public/index.php?url=ajax-quote')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        quoteText.textContent = `"${data.quote}"`;
+                        quoteAuthor.textContent = `— ${data.author}`;
+                    } else {
+                        quoteText.textContent = 'Could not load quote right now.';
+                        quoteAuthor.textContent = '';
+                    }
+                })
+                .catch(() => {
+                    quoteText.textContent = 'Could not load quote right now.';
+                    quoteAuthor.textContent = '';
+                });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadQuote();
+
+            const savedTask = localStorage.getItem('draftTask');
+            if (savedTask) {
+                taskTitle.value = savedTask;
             }
-        })
-        .catch(() => {
-            quoteText.textContent = 'Could not load quote right now.';
-            quoteAuthor.textContent = '';
         });
-}
-        window.addEventListener('DOMContentLoaded', loadQuote);
+
+        taskTitle.addEventListener('input', () => {
+            localStorage.setItem('draftTask', taskTitle.value);
+        });
     </script>
 </body>
 </html>
